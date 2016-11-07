@@ -14,7 +14,7 @@ android {
 
     signingConfigs{
         release{
-            storeFile file("YOUSE")
+            storeFile file("YOUSE.jks")
             storePassword "reddit1234"
             keyAlias "reddit-demo"
             keyPassword "reddit1234"
