@@ -50,7 +50,7 @@ public class PostsActivity extends BaseActivity implements PostPresenter.ViewPre
         setContentView(R.layout.activity_post_layout);
         mData = new ArrayList<>();
         loadView();
-        mPresenter = new PostPresenter(this, this);
+        mPresenter = new PostPresenter(this);
         checkDataInHeadlessFragment();
     }
 
