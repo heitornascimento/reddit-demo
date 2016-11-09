@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.widget.ImageView;
 
+import java.lang.ref.WeakReference;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -19,11 +20,11 @@ import app.youse.com.reddit.R;
 public class BitmapManager {
 
     private static BitmapManager ourInstance = new BitmapManager();
-    private static Context ctx;
+    private static WeakReference<Context> weakReference;
     private ExecutorService mPool = Executors.newFixedThreadPool(8);
 
     public static BitmapManager getInstance(Context context) {
-        ctx = context;
+        weakReference = new WeakReference<>(context);
         return ourInstance;
     }
 
@@ -56,7 +57,7 @@ public class BitmapManager {
         if (bitmap == null) {
             mPool.execute(new ImageWorkerTask(profile, url, handler));
             bitmap = BitmapFactory.
-                    decodeResource(ctx.getResources(), R.drawable.image_placeholder);
+                    decodeResource(weakReference.get().getResources(), R.drawable.image_placeholder);
 
         }
         return bitmap;

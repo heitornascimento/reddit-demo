@@ -1,92 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:autofit="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="8dp"
-    android:orientation="vertical">
+    android:layout_height="160dp"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
+    card_view:cardCornerRadius="5dp"
+    card_view:cardElevation="4dp"
+    card_view:cardUseCompatPadding="true">
 
-    <android.support.v7.widget.CardView
+    <android.support.percent.PercentRelativeLayout
+        android:id="@+id/ll_content"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:background="@drawable/ripple_recycler"
-        app:cardElevation="2dp">
+        android:layout_height="wrap_content">
 
-        <android.support.percent.PercentRelativeLayout
-            android:id="@+id/ll_content"
+
+        <LinearLayout
+            android:id="@+id/llMain"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_heightPercent="70%">
 
-
-            <LinearLayout
-                android:id="@+id/llMain"
-                android:layout_width="match_parent"
+            <me.grantland.widget.AutofitTextView
+                android:id="@+id/title"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_heightPercent="70%">
+                android:layout_weight="2"
+                android:maxLines="3"
+                android:paddingLeft="16dp"
+                android:paddingTop="8dp"
+                android:text="looooooooooooooooooooooooooooooooooooooon text!!!!!!!"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                autofit:minTextSize="20sp" />
 
-                <me.grantland.widget.AutofitTextView
-                    android:id="@+id/title"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:maxLines="3"
-                    android:paddingLeft="16dp"
-                    android:paddingTop="8dp"
-                    android:text="looooooooooooooooooooooooooooooooooooooon text!!!!!!!"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    autofit:minTextSize="20sp" />
-
-                <ImageView
-                    android:id="@+id/icon"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="16dp"
-                    android:layout_weight="1"
-                    android:paddingTop="8dp"
-                    android:src="@mipmap/ic_launcher" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/llMain"
-                android:orientation="horizontal"
-                android:paddingBottom="4dp"
-                android:paddingTop="4dp"
-                app:layout_heightPercent="30%">
-
-                <TextView
-                    android:id="@+id/comments_number"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawableLeft="@drawable/comment"
-                    android:drawablePadding="4dp"
-                    android:paddingLeft="16dp"
-                    android:text="400"
-                    android:textSize="12sp" />
+                android:layout_marginRight="16dp"
+                android:layout_weight="1"
+                android:paddingTop="8dp" />
+        </LinearLayout>
 
 
-                <TextView
-                    android:id="@+id/ups_number"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawableLeft="@drawable/up"
-                    android:drawablePadding="4dp"
-                    android:paddingLeft="16dp"
-                    android:text="300"
-                    android:textSize="12sp" />
-            </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/llMain"
+            android:orientation="horizontal"
+            android:paddingBottom="4dp"
+            android:paddingTop="4dp"
+            app:layout_heightPercent="30%">
+
+            <TextView
+                android:id="@+id/comments_number"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/comment"
+                android:drawablePadding="4dp"
+                android:paddingLeft="16dp"
+                android:text="400"
+                android:textSize="12sp" />
 
 
-        </android.support.percent.PercentRelativeLayout>
+            <TextView
+                android:id="@+id/ups_number"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/up"
+                android:drawablePadding="4dp"
+                android:paddingLeft="16dp"
+                android:text="300"
+                android:textSize="12sp" />
+        </LinearLayout>
 
 
-    </android.support.v7.widget.CardView>
+    </android.support.percent.PercentRelativeLayout>
 
-</LinearLayout>
+
+</android.support.v7.widget.CardView>

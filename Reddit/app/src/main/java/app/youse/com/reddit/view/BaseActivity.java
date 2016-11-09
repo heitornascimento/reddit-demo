@@ -47,7 +47,6 @@ public class BaseActivity extends AppCompatActivity {
 
     protected boolean checkInternetConnection() {
 
-
         boolean result = ConnectionUtil.hasValidaConnection(this);
 
         if (!result) {

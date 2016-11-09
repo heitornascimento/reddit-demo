@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Point;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
+import android.view.WindowManager;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -62,4 +63,5 @@ public class ServiceDisplayMetrics {
         display.getSize(size);
         return size;
     }
+
 }

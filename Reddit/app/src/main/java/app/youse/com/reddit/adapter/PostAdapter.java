@@ -6,6 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +17,7 @@ import com.squareup.picasso.Picasso;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
+import java.util.Random;
 
 import app.youse.com.reddit.R;
 import app.youse.com.reddit.cache.BitmapManager;
@@ -31,6 +36,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     private List<Post> mData;
     private ViewHolder mViewHolder;
     private WeakReference<AppCompatActivity> mWeakReference;
+
+    //Animation
+    private int lastPosition = -1;
 
     public PostAdapter(List<Post> data, AppCompatActivity ctx) {
         mData = data;
@@ -57,6 +65,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+
+        //runEnterAnimation(mViewHolder.itemView, position);
         final Post post = mData.get(position);
         final String title = post.getPostDetails().getTitle();
         final Preview preview = post.getPostDetails().getPreview();
@@ -67,10 +77,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                     .getImageResolutionList();
             if (imageResolutionList != null && imageResolutionList.size() > 0) {
 
-                /*String formatUrl = UrlUtil.formatString(ServiceDisplayMetrics.
-                        getResolution(mWeakReference, imageResolutionList).getUrl());
-                Picasso.with(mWeakReference.get()).load(formatUrl)
-                        .into(holder.icon);*/
                 BitmapManager manager = BitmapManager.getInstance(mWeakReference.get());
                 String formatUrl = UrlUtil.formatString(ServiceDisplayMetrics.
                         getResolution(mWeakReference, imageResolutionList).getUrl());
@@ -78,13 +84,24 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 mViewHolder.icon.setImageBitmap(bitmap);
             }
         } else {
-            //holder.icon.setVisibility(View.GONE);
             mViewHolder.icon.setVisibility(View.GONE);
         }
         mViewHolder.title.setText(title);
         mViewHolder.comments.setText(String.valueOf(post.getPostDetails().getCommentsNum()));
         mViewHolder.ups.setText(String.valueOf(post.getPostDetails().getUps()));
+        setFadeAnimation(mViewHolder.itemView, position);
     }
+
+    private void setFadeAnimation(View view, int position) {
+        if (position > lastPosition) {
+            ScaleAnimation anim = new ScaleAnimation(0.0f, 1.0f, 0.0f, 1.0f,
+                    Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+            anim.setDuration(300);
+            view.startAnimation(anim);
+            lastPosition = position;
+        }
+    }
+
 
     @Override
     public int getItemCount() {

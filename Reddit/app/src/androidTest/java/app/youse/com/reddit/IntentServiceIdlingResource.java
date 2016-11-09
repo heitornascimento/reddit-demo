@@ -10,6 +10,9 @@ import app.youse.com.reddit.endpoint.RedditEndpoint;
  * Created by heitornascimento on 11/6/16.
  */
 
+/**
+ * This Idling resource is no longer being used.
+ */
 public class IntentServiceIdlingResource implements IdlingResource {
     private final Context ctx;
     private IdlingResource.ResourceCallback resourceCallback;

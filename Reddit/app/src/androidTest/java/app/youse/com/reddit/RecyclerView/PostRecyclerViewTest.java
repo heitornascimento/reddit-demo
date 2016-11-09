@@ -48,17 +48,17 @@ public class PostRecyclerViewTest {
     public void registerIntentServiceIdlingResource() {
         Context ctx = InstrumentationRegistry.getTargetContext();
         idlingResource = new IntentServiceIdlingResource(ctx);
-        registerIdlingResources(idlingResource);
+        //registerIdlingResources(idlingResource);
     }
 
     @After
     public void unregisterIntentServiceIdlingResource() {
-        unregisterIdlingResources(idlingResource);
+       // unregisterIdlingResources(idlingResource);
     }
 
 
     @Test
-    public void shouldContainRedditPost() {
+    public void shouldContainRedditPost() throws InterruptedException {
         onView(ViewMatchers.withId(R.id.posts)).check(new RecyclerViewCountAssertion(INIT_COUNT));
     }
 

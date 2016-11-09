@@ -43,6 +43,7 @@ public class PostsActivity extends BaseActivity implements PostPresenter.ViewPre
 
     private static final String DATA_TAG_POST = "data";
     private HeadlessFragment mHeadlessFragment;
+    private TextView mErroData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +51,7 @@ public class PostsActivity extends BaseActivity implements PostPresenter.ViewPre
         setContentView(R.layout.activity_post_layout);
         mData = new ArrayList<>();
         loadView();
-        mPresenter = new PostPresenter(this);
+        mPresenter = new PostPresenter(this, this);
         checkDataInHeadlessFragment();
     }
 
@@ -73,7 +74,10 @@ public class PostsActivity extends BaseActivity implements PostPresenter.ViewPre
         if (mHeadlessFragment == null) {
             mHeadlessFragment = new HeadlessFragment();
             fragmentManager.beginTransaction().add(mHeadlessFragment, DATA_TAG_POST).commit();
-            loadDataPost();
+            if (!loadDataPost()) {
+                mErroData.setVisibility(View.VISIBLE);
+                mLoading.setVisibility(View.GONE);
+            }
         } else {
             mData = mHeadlessFragment.getData();
             setViewsVisibilityAndNotifyAdapter();
@@ -99,10 +103,11 @@ public class PostsActivity extends BaseActivity implements PostPresenter.ViewPre
         mRecyclerView.setVisibility(View.VISIBLE);
         mLoading.setVisibility(View.GONE);
         mProgressing.setVisibility(View.GONE);
+        mErroData.setVisibility(View.GONE);
     }
 
     @Override
-    public void onFailure() {
+    public void onFailure(String message) {
         mSwipeRefresh.setRefreshing(false);
         mLoading.setVisibility(View.GONE);
     }
@@ -122,8 +127,9 @@ public class PostsActivity extends BaseActivity implements PostPresenter.ViewPre
         mRecyclerView.addOnScrollListener(new InfiniteScrollListener(llManager) {
             @Override
             public void onLoadMore() {
-                mProgressing.setVisibility(View.VISIBLE);
-                mPresenter.loadPostData();
+                if (loadDataPost()) {
+                    mProgressing.setVisibility(View.VISIBLE);
+                }
             }
         });
         mAdapter = new PostAdapter(mData, this);
@@ -132,15 +138,19 @@ public class PostsActivity extends BaseActivity implements PostPresenter.ViewPre
         mSwipeRefresh.setOnRefreshListener(this);
         mLoading = (ProgressBar) findViewById(R.id.loading);
         mProgressing = (ProgressBar) findViewById(R.id.progress);
+        mErroData = (TextView) findViewById(R.id.error_load);
     }
 
     /**
      * Retrieve the recent Android posts
      */
-    private void loadDataPost() {
+    private boolean loadDataPost() {
         if (checkInternetConnection()) {
             mPresenter.loadPostData();
+            return true;
         }
+
+        return false;
     }
 
 
@@ -158,6 +168,8 @@ public class PostsActivity extends BaseActivity implements PostPresenter.ViewPre
 
     @Override
     public void onRefresh() {
-        loadDataPost();
+        if (!loadDataPost()) {
+            mSwipeRefresh.setRefreshing(false);
+        }
     }
 }

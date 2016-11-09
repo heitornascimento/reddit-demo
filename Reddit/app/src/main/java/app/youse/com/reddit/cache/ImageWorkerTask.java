@@ -40,14 +40,19 @@ public class ImageWorkerTask implements Runnable {
                 connection.connect();
                 InputStream input;
                 input = connection.getInputStream();
-                Bitmap imageProfile = BitmapFactory.decodeStream(input);
+
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                //TODO calculate at runtime the best sample to size to avoid out-of-memory
+                options.inSampleSize = 2;
+
+                Bitmap imageProfile = BitmapFactory.decodeStream(input, null, options);
+
                 if (imageProfile != null) {
                     CacheImage.getInstance().addImageInCache(profile, imageProfile);
                     //Get back to the main thread to update image view
                     Message message = Message.obtain();
                     message.obj = imageProfile;
                     handler.sendMessage(message);
-                    imageProfile = null;
                 }
 
             } catch (Exception e) {
