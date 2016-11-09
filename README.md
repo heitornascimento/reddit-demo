@@ -8,7 +8,7 @@
 1. Swipe to refresh.
 1. Infinite scroll.
 1. Instrumentation Test with espresso.
-1. Unit Test with mockit.
+1. Unit Test with mockito.
 1. Service to load the appropriate image according to the device resolution.
 1. Animation for the recyclerview itens.
 1. Headless fragment to retain the data when the orientation changes.
